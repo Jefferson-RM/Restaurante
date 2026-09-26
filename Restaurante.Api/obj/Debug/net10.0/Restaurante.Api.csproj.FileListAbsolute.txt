@@ -153,3 +153,4 @@ C:\Users\inoce\Desktop\Restaurante\Restaurante.Api\obj\Debug\net10.0\staticwebas
 C:\Users\inoce\Desktop\Restaurante\Restaurante.Api\obj\Debug\net10.0\staticwebassets.build.json.cache
 C:\Users\inoce\Desktop\Restaurante\Restaurante.Api\obj\Debug\net10.0\staticwebassets.development.json
 C:\Users\inoce\Desktop\Restaurante\Restaurante.Api\obj\Debug\net10.0\staticwebassets.build.endpoints.json
+C:\Users\inoce\Desktop\Restaurante\Restaurante.Api\obj\Debug\net10.0\Restaurante.Api.sourcelink.json
