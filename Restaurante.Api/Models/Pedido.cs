@@ -4,6 +4,11 @@ public class Pedido
      public DateTime Fecha { get; set; } = DateTime.Now;
     public List<ItemPedido> Items { get; set; } = new List<ItemPedido>();
 
+    public string NombreCliente { get; set; } = string.Empty;
+    public string Telefono { get; set; } = string.Empty;
+    public EstadoPedido Estado { get; set; } = EstadoPedido.Pendiente;
+    public TipoPedido TipoPedido { get; set; }
+
     public decimal CalcularSubtotal()
     {
         decimal subtotal = 0;

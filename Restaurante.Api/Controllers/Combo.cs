@@ -44,4 +44,50 @@ public class CombosController : ControllerBase
 
         return Ok(comboNuevo);
     }
+
+    // PUT api/combos/{id} -> edita un combo existente
+    [HttpPut("{id}")]
+    public IActionResult EditarCombo(int id, [FromBody] CrearComboRequest request)
+    {
+        Combo? combo = _db.Combos.Include(c => c.Platos).FirstOrDefault(c => c.Id == id);
+
+        if (combo == null)
+        {
+            return NotFound();
+        }
+
+        combo.Nombre = request.Nombre;
+        combo.PrecioCombo = request.PrecioCombo;
+
+        combo.Platos.Clear();
+        foreach (int platoId in request.PlatoIds)
+        {
+            Plato? plato = _db.Platos.Find(platoId);
+            if (plato != null)
+            {
+                combo.Platos.Add(plato);
+            }
+        }
+
+        _db.SaveChanges();
+
+        return Ok(combo);
+    }
+
+    // DELETE api/combos/{id} -> elimina un combo
+    [HttpDelete("{id}")]
+    public IActionResult EliminarCombo(int id)
+    {
+        Combo? combo = _db.Combos.Find(id);
+
+        if (combo == null)
+        {
+            return NotFound();
+        }
+
+        _db.Combos.Remove(combo);
+        _db.SaveChanges();
+
+        return NoContent();
+    }
 }

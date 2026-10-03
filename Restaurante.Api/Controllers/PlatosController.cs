@@ -27,4 +27,41 @@ public class PlatosController : ControllerBase
 
         return Ok(platoNuevo);
     }
+
+    // PUT api/platos/{id} -> edita un plato existente
+    [HttpPut("{id}")]
+    public IActionResult EditarPlato(int id, [FromBody] CrearPlatoRequest request)
+    {
+        Plato? plato = _db.Platos.Find(id);
+
+        if (plato == null)
+        {
+            return NotFound();
+        }
+
+        plato.Nombre = request.Nombre;
+        plato.Precio = request.Precio;
+        plato.Categoria = request.Categoria;
+
+        _db.SaveChanges();
+
+        return Ok(plato);
+    }
+
+    // DELETE api/platos/{id} -> elimina un plato
+    [HttpDelete("{id}")]
+    public IActionResult EliminarPlato(int id)
+    {
+        Plato? plato = _db.Platos.Find(id);
+
+        if (plato == null)
+        {
+            return NotFound();
+        }
+
+        _db.Platos.Remove(plato);
+        _db.SaveChanges();
+
+        return NoContent();
+    }
 }

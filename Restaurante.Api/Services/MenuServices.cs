@@ -11,11 +11,11 @@ public class MenuService
 
     public List<OfertaDelDia> ObtenerOfertasDeHoy()
     {
-        DayOfWeek hoy = DateTime.Now.DayOfWeek;
+        DateTime hoy = DateTime.Now.Date;
 
         List<OfertaDelDia> ofertas = _db.Ofertas
             .Include(o => o.Platos)
-            .Where(o => o.DiaSemana == hoy)
+            .Where(o => hoy >= o.FechaInicio.Date && hoy <= o.FechaFin.Date)
             .ToList();
 
         return ofertas;

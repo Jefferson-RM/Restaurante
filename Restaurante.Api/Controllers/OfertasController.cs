@@ -14,7 +14,6 @@ public class OfertasController : ControllerBase
         _menuService = menuService;
     }
 
-    // GET api/ofertas -> lista todas las ofertas
     [HttpGet]
     public IActionResult ObtenerOfertas()
     {
@@ -22,7 +21,6 @@ public class OfertasController : ControllerBase
         return Ok(ofertas);
     }
 
-    // GET api/ofertas/hoy -> las ofertas activas hoy
     [HttpGet("hoy")]
     public IActionResult ObtenerOfertasDeHoy()
     {
@@ -30,13 +28,13 @@ public class OfertasController : ControllerBase
         return Ok(ofertas);
     }
 
-    // POST api/ofertas -> crea una oferta nueva
     [HttpPost]
     public IActionResult CrearOferta([FromBody] CrearOfertaRequest request)
     {
         OfertaDelDia ofertaNueva = new OfertaDelDia
         {
-            DiaSemana = request.DiaSemana,
+            FechaInicio = request.FechaInicio,
+            FechaFin = request.FechaFin,
             PrecioOferta = request.PrecioOferta
         };
 
@@ -53,5 +51,50 @@ public class OfertasController : ControllerBase
         _db.SaveChanges();
 
         return Ok(ofertaNueva);
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult EditarOferta(int id, [FromBody] CrearOfertaRequest request)
+    {
+        OfertaDelDia? oferta = _db.Ofertas.Include(o => o.Platos).FirstOrDefault(o => o.Id == id);
+
+        if (oferta == null)
+        {
+            return NotFound();
+        }
+
+        oferta.FechaInicio = request.FechaInicio;
+        oferta.FechaFin = request.FechaFin;
+        oferta.PrecioOferta = request.PrecioOferta;
+
+        oferta.Platos.Clear();
+        foreach (int platoId in request.PlatoIds)
+        {
+            Plato? plato = _db.Platos.Find(platoId);
+            if (plato != null)
+            {
+                oferta.Platos.Add(plato);
+            }
+        }
+
+        _db.SaveChanges();
+
+        return Ok(oferta);
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult EliminarOferta(int id)
+    {
+        OfertaDelDia? oferta = _db.Ofertas.Find(id);
+
+        if (oferta == null)
+        {
+            return NotFound();
+        }
+
+        _db.Ofertas.Remove(oferta);
+        _db.SaveChanges();
+
+        return NoContent();
     }
 }
