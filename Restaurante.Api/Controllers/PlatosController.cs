@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -12,6 +13,7 @@ public class PlatosController : ControllerBase
     }
 
     // POST api/platos -> crea un plato nuevo
+    [Authorize]
     [HttpPost]
     public IActionResult CrearPlato([FromBody] CrearPlatoRequest request)
     {
@@ -29,6 +31,7 @@ public class PlatosController : ControllerBase
     }
 
     // PUT api/platos/{id} -> edita un plato existente
+    [Authorize]
     [HttpPut("{id}")]
     public IActionResult EditarPlato(int id, [FromBody] CrearPlatoRequest request)
     {
@@ -49,6 +52,7 @@ public class PlatosController : ControllerBase
     }
 
     // DELETE api/platos/{id} -> elimina un plato
+    [Authorize]
     [HttpDelete("{id}")]
     public IActionResult EliminarPlato(int id)
     {

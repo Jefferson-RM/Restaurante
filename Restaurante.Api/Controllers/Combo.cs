@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,6 @@ public class CombosController : ControllerBase
         _db = db;
     }
 
-    // GET api/combos -> lista todos los combos existentes
     [HttpGet]
     public IActionResult ObtenerCombos()
     {
@@ -20,7 +20,7 @@ public class CombosController : ControllerBase
         return Ok(combos);
     }
 
-    // POST api/combos -> crea un combo nuevo
+    [Authorize]
     [HttpPost]
     public IActionResult CrearCombo([FromBody] CrearComboRequest request)
     {
@@ -45,7 +45,7 @@ public class CombosController : ControllerBase
         return Ok(comboNuevo);
     }
 
-    // PUT api/combos/{id} -> edita un combo existente
+    [Authorize]
     [HttpPut("{id}")]
     public IActionResult EditarCombo(int id, [FromBody] CrearComboRequest request)
     {
@@ -74,7 +74,7 @@ public class CombosController : ControllerBase
         return Ok(combo);
     }
 
-    // DELETE api/combos/{id} -> elimina un combo
+    [Authorize]
     [HttpDelete("{id}")]
     public IActionResult EliminarCombo(int id)
     {

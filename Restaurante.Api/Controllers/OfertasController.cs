@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,6 +29,7 @@ public class OfertasController : ControllerBase
         return Ok(ofertas);
     }
 
+    [Authorize]
     [HttpPost]
     public IActionResult CrearOferta([FromBody] CrearOfertaRequest request)
     {
@@ -53,6 +55,7 @@ public class OfertasController : ControllerBase
         return Ok(ofertaNueva);
     }
 
+    [Authorize]
     [HttpPut("{id}")]
     public IActionResult EditarOferta(int id, [FromBody] CrearOfertaRequest request)
     {
@@ -82,6 +85,7 @@ public class OfertasController : ControllerBase
         return Ok(oferta);
     }
 
+    [Authorize]
     [HttpDelete("{id}")]
     public IActionResult EliminarOferta(int id)
     {
