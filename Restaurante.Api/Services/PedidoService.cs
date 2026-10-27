@@ -56,11 +56,16 @@ public class PedidoService
         return item;
     }
 
-    public Pedido CrearPedido(List<ItemSolicitado> itemsSolicitados)
+    public Pedido CrearPedido(CrearPedidoRequest request)
     {
-        Pedido pedido = new Pedido();
+        Pedido pedido = new Pedido
+        {
+            NombreCliente = request.NombreCliente,
+            Telefono = request.Telefono,
+            TipoPedido = request.TipoPedido
+        };
 
-        foreach (ItemSolicitado solicitud in itemsSolicitados)
+        foreach (ItemSolicitado solicitud in request.Items)
         {
             if (solicitud.PlatoId.HasValue)
             {
